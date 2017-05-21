@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>Test socket.io</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
+    <script>
+        $(function(){
+            console.log('app is go!');
+            var iosocket = io.connect();
+            iosocket.on('connect', function () {
+                console.log('io connected');
+            });
+            iosocket.emit('basic',[{message : 'wtf'},{message: 'Hello Pavlo'},{message:'Gmg is go'}]);
+
+            $('#btn').on('click', function (e) {
+                e.preventDefault();
+                var text = $('#message').val();
+                $('#message').val('');
+                iosocket.emit('newActivity', {message: text});
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <input id="message" name="message" type="text" />
+    <button id="btn">Submit</button>
+    <br><br><hr><br>
+    <div id="display"></div>
+    <br><hr><br><br>
+    <button id="show">All messages</button>
+</body>
+</html>
